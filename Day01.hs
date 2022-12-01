@@ -2,11 +2,8 @@ import Prelude
 import Text.Read (readMaybe)
 import Data.List (sort)
 
-total :: [Int] -> Int
-total = sum
-
 totalList :: [[Int]] -> [Int]
-totalList = map total
+totalList = map sum
 
 most :: [[Int]] -> Int
 most = maximum . totalList
