@@ -23,12 +23,10 @@ splitWhenNothing xs = pusher xs []
         pusher (Just x:xs) ys = pusher xs (x : ys)
 
 topThreeTotal :: [[Int]] -> Int
-topThreeTotal = getTopThree . sortIncreasing
+topThreeTotal = sum . take 3 . sortIncreasing
     where
         sortIncreasing :: [[Int]] -> [Int]
         sortIncreasing = reverse . sort . totalList
-        getTopThree :: [Int] -> Int
-        getTopThree (x:y:z:xs) = x + y + z
 
 main :: IO ()
 main = do
