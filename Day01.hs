@@ -1,5 +1,4 @@
 import Prelude
-import Text.Read (readMaybe)
 import Data.List (sort)
 import Util
 
@@ -15,9 +14,6 @@ most = maximum . totalList
 --------------------
 --     Part 2     --
 --------------------
-readMaybeList :: [String] -> [Maybe Int]
-readMaybeList = map readMaybe
-
 topThreeTotal :: [[Int]] -> Int
 topThreeTotal = sum . take 3 . sortIncreasing
     where
