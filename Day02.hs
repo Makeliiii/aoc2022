@@ -11,13 +11,13 @@ encode x
     | x == 'C' || x == 'Z' = 3
 
 score :: Int -> Int -> Int
-score x y = ((y - x + 1) `mod` 3) * 3
+score x y = ((y - x + 1) `mod` 3) * 3 + y
 
-match :: Char -> Char -> Int
-match = finalScore
-    where
-        finalScore :: Char -> Char -> Int
-        finalScore x y = score (encode x) (encode y) + encode y
+--------------------
+--     Part 2     --
+--------------------
+match :: Int -> Int -> Int
+match x y = score x $ 1 + (x + y) `mod` 3
 
 --------------------
 --      Main      --
@@ -26,4 +26,5 @@ main :: IO ()
 main = do
    rpcs <- readFile "inputs/Day02.txt" :: IO String
    let chunks = map (\x -> (head x, last x)) $ lines rpcs
-   print $ sum $ map (uncurry match) chunks
+   print $ sum $ map (\(x, y) -> score (encode x) (encode y)) chunks
+   print $ sum $ map (\(x, y) -> match (encode x) (encode y)) chunks
