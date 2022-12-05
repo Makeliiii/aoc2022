@@ -1,6 +1,5 @@
 import Prelude
 import Util
-import Data.Bifunctor (Bifunctor(bimap))
 
 pairOn :: Char -> String -> (String, String)
 pairOn = pairer []
