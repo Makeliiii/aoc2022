@@ -1,37 +1,23 @@
 import Prelude
 import Util
-import Data.List (sort)
-import Distribution.Simple.Utils (safeHead)
-import Data.Set (fromList, intersection, toList)
+import Data.List (sort, intersect)
+import Data.Char (ord, isUpper)
 
-alphabet :: String
-alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY"
-
+--------------------
+--     Part 1     --
+--------------------
 splitRucksack :: String -> (String, String)
 splitRucksack xs = (take tLenght xs, take tLenght $ reverse xs)
     where
         tLenght = length xs `div` 2
 
---------------------
---     Part 1     --
---------------------
-search :: String -> String -> Maybe Char
-search xs ys = safeHead $ toList $ intersection a b
-    where
-        a = fromList xs
-        b = fromList ys
+search :: String -> String -> Char
+search xs = head . intersect xs
 
-index :: Maybe Char -> Int
-index Nothing  = 0
-index (Just x) = calc alphabet 1
-    where
-        calc :: String -> Int -> Int
-        calc [] count = count
-        calc (y:ys) count =
-            if x == y then
-                count
-            else
-                calc ys (count + 1)
+index :: Char -> Int
+index c
+    | isUpper c = ord c - ord 'A' + 27
+    | otherwise = ord c - ord 'a' + 1
 
 --------------------
 --     Part 2     --
@@ -40,12 +26,8 @@ splitToThree :: [String] -> [(String, String, String)]
 splitToThree [] = []
 splitToThree (x:y:z:xs) = (x, y, z) : splitToThree xs
 
-searchFromThree :: String -> String -> String -> Maybe Char
-searchFromThree xs ys zs = safeHead $ toList $ intersection a $ intersection b c
-    where
-        a = fromList xs
-        b = fromList ys
-        c = fromList zs
+searchFromThree :: String -> String -> String -> Char
+searchFromThree xs ys = head . intersect xs . intersect ys
 
 --------------------
 --      Main      --
