@@ -6,13 +6,13 @@ import Data.List (nub)
 --------------------
 --   Part 1 & 2   --
 --------------------
-takeUntil :: Int -> Int -> String -> Int
-takeUntil _ count [] = count
-takeUntil num count (x:xs) = 
-    if uniqueLength num (x:xs) == num then
-        count
-    else
-        takeUntil num (count + 1) xs
+takeUntil :: Int -> String -> Int
+takeUntil count = takeUntil' count count
+
+takeUntil' :: Int -> Int -> String -> Int
+takeUntil' num count xs
+    | uniqueLength num xs == num = count
+    | otherwise = takeUntil' num (count + 1) (tail xs)
 
 uniqueLength :: Int -> String -> Int
 uniqueLength count = length . nub . take count
@@ -23,5 +23,5 @@ uniqueLength count = length . nub . take count
 main :: IO ()
 main = do
     str <- readFile "inputs/Day06.txt" :: IO String
-    print $ takeUntil 4 4 $ join $ lines str
-    print $ takeUntil 14 14 $ join $ lines str
+    print $ takeUntil 4 $ join $ lines str
+    print $ takeUntil 14 $ join $ lines str
